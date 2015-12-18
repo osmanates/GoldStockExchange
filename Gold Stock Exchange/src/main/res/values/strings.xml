@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Gold Stock Exchange</string>
+
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="server_client_id">38341071581-l231ianrcinqfctgag957o0kopnd8blo.apps.googleusercontent.com</string>
+    <string name="sender_id">38341071581</string>
+</resources>

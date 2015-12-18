@@ -1,0 +1,42 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Gradle : Gold Stock Exchange:GCM Server : GCM Server.war">
+    <output-path>$PROJECT_DIR$/build/classes/artifacts/GCM Server</output-path>
+    <properties id="gradle-properties">
+      <options external-project-path="$PROJECT_DIR$" />
+    </properties>
+    <root id="archive" name="GCM Server.war">
+      <element id="javaee-facet-resources" facet="GCM Server/web/Web Gradle : GCM Server.war" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="GCM Server" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/servlet-api/2.5/5959582d97d8b61f4d154ca9e495aafd16726e34/servlet-api-2.5.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/4.0/659add6efc75a4715d738e73f07505246edf4d66/asm-4.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.datanucleus/datanucleus-api-jpa/3.1.3/9866db180ef911990dbb1f82ce7015d8135d40b/datanucleus-api-jpa-3.1.3.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.datanucleus/datanucleus-api-jdo/3.1.3/2b516725909217520c9c55b591b5e48ab3a0dc64/datanucleus-api-jdo-3.1.3.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.appengine.orm/datanucleus-appengine/2.1.2/c94b27586d50c55ab7dd54ee2174282e6a1e96a6/datanucleus-appengine-2.1.2.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.datanucleus/datanucleus-core/3.1.3/7d242e12ee2171a092b6ba1da6a03f8872f422d7/datanucleus-core-3.1.3.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.geronimo.specs/geronimo-jpa_2.0_spec/1.0/5db1ae9b2de405fd9dcfa0af373cbe0183f65d58/geronimo-jpa_2.0_spec-1.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.jdo/jdo-api/3.0.1/58e7a538e020b73871e232eeb064835fd98a492/jdo-api-3.0.1.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.transaction/jta/1.1/2ca09f0b36ca7d71b762e14ea2ff09d5eac57558/jta-1.1.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/5e303a03d04e6788dddfa3655272580ae0fc13bb/json-simple-1.1.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-java7/4.1.4/7fba593e3e07934ad9024d475dcd35e11115eb43/smack-java7-4.1.4.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-tcp/4.1.4/abe52f8b9e66bd65339106298636c7888f63762e/smack-tcp-4.1.4.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-im/4.1.4/36af87ca593fe82cae6591a4d72a321581130dc4/smack-im-4.1.4.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jxmpp/jxmpp-core/0.5.0-alpha6/bcf746583ad0c2b325c3d819a8528598e926eb36/jxmpp-core-0.5.0-alpha6.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jxmpp/jxmpp-util-cache/0.5.0-alpha6/4b88f6c6b7c9d63aaf50b42bc04d48a9874c86a1/jxmpp-util-cache-0.5.0-alpha6.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.appengine/appengine-api-1.0-sdk/1.7.5/ef99763adf598681d9cc1b78d58d9c9ac1fa88db/appengine-api-1.0-sdk-1.7.5.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.datanucleus/datanucleus-enhancer/3.1.1/b141c67d55cc19f14639f091b84e692e2198dc50/datanucleus-enhancer-3.1.1.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-core/4.1.4/e192acc0380ac43bcf54b3b41e3c160dad8f4023/smack-core-4.1.4.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-resolver-javax/4.1.4/5d9a625734b2aec31456b6915bfecd38aaf34cef/smack-resolver-javax-4.1.4.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.igniterealtime.smack/smack-sasl-javax/4.1.4/83e08d19db322df3f0fcdfb87618afde3d48dcfe/smack-sasl-javax-4.1.4.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/xpp3/xpp3/1.1.4c/9b988ea84b9e4e9f1874e390ce099b8ac12cfff5/xpp3-1.1.4c.jar" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/build/classes/artifacts/GCM Server/exploded/GCM Server.war/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

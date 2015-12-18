@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_id": "default-demo-app-89164",
+    "project_number": "38341071581",
+    "name": "Default Demo App"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38341071581:android:74abd0f00cf47293",
+        "client_id": "android:com.vossoftware.app.goldstockexchangev3",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.vossoftware.app.goldstockexchangev3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38341071581-p2klrfmca4vjgjkheup27a98q6769g0c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vossoftware.app.goldstockexchangev3",
+            "certificate_hash": "B7B75052D204EF4243A4223399D67B3BC3499E6E"
+          }
+        },
+        {
+          "client_id": "38341071581-8oonl22m519cu0e16cuffcn5kqkgdbsp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vossoftware.app.goldstockexchangev3",
+            "certificate_hash": "21472DA7D984F838A61185767C49EB0AD637E033"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
