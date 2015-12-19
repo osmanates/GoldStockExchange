@@ -42,7 +42,8 @@ dependencies {
     compile 'org.jxmpp:jxmpp-core:0.5.0-alpha6'
     compile 'org.jxmpp:jxmpp-util-cache:0.5.0-alpha6'
     compile 'com.google.code.gson:gson:2.3.1'
-
+    compile 'com.google.apis:google-api-services-datastore-protobuf:v1beta2-rev1-3.0.2'
+    compile 'com.google.protobuf:protobuf-java:3.0.0-beta-1'
 }
 mainClassName = 'com.vossoftware.app.goldstockexchangev3.server.FriendlyPingServer'
 /*appengine {
