@@ -16,7 +16,11 @@
 
 package com.vossoftware.app.goldstockexchangev3.server;
 
+import com.google.api.client.util.Data;
+//import com.google.api.services.datastore.DatastoreV1;
+import com.google.api.services.datastore.DatastoreV1;
 import com.google.api.services.datastore.client.Datastore;
+import com.google.api.services.datastore.client.DatastoreException;
 import com.google.api.services.datastore.client.DatastoreFactory;
 import com.google.api.services.datastore.client.DatastoreHelper;
 import com.google.gson.Gson;
@@ -53,6 +57,7 @@ public class FriendlyPingServer {
     String profilePictureUrl;
     @SerializedName("device_unique_id")
     String deviceUniqueId;
+
     public boolean isValid() {
       return StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(registrationToken) && StringUtils.isNotEmpty(deviceUniqueId)/* &&
           StringUtils.isNotEmpty(profilePictureUrl)*/;
@@ -62,7 +67,7 @@ public class FriendlyPingServer {
   // FriendlyGcmServer defines onMessage to handle incoming friendly ping messages.
   private class FriendlyGcmServer extends GcmServer {
 
-    public FriendlyGcmServer (String apiKey, String senderId, String serviceName) {
+    public FriendlyGcmServer(String apiKey, String senderId, String serviceName) {
       super(apiKey, senderId, serviceName);
     }
 
@@ -71,7 +76,11 @@ public class FriendlyPingServer {
       if (jData.has("action")) {
         String action = jData.get("action").getAsString();
         if (action.equals(Constants.ACTION_REGISTER)) {
-          registerNewClient(jData);
+          try {
+            registerNewClient(jData);
+          } catch (DatastoreException e) {
+            e.printStackTrace();
+          }
         } else if (action.equals(Constants.ACTION_SEND_MESSAGE)) {
           String toToken = jData.get("to").getAsString();
           String senderToken = jData.get("sender").getAsString();
@@ -115,6 +124,7 @@ public class FriendlyPingServer {
 
   // Gson helper to assist with going to and from JSON and Client.
   private Gson gson;
+  private static Datastore datastore;
 
   public FriendlyPingServer(String apiKey, String senderId) {
     clientMap = new ConcurrentHashMap<String, Client>();
@@ -138,7 +148,7 @@ public class FriendlyPingServer {
     client.registrationToken = SENDER_ID + "@gcm.googleapis.com";
     client.deviceUniqueId = "abcnfddsd123lkfg";
     client.profilePictureUrl =
-        "https://lh3.googleusercontent.com/-Y86IN-vEObo/AAAAAAAAAAI/AAAAAAADO1I/QzjOGHq5kNQ/photo.jpg?sz=50";
+            "https://lh3.googleusercontent.com/-Y86IN-vEObo/AAAAAAAAAAI/AAAAAAADO1I/QzjOGHq5kNQ/photo.jpg?sz=50";
     return client;
   }
 
@@ -148,7 +158,7 @@ public class FriendlyPingServer {
    *
    * @param jData JSON data containing properties of new Client.
    */
-  private void registerNewClient(JsonObject jData) {
+  private void registerNewClient(JsonObject jData) throws DatastoreException {
     Client newClient = gson.fromJson(jData, Client.class);
     logger.log(Level.INFO, "Name= " + newClient.name);
     logger.log(Level.INFO, "Registration Token=  " + newClient.registrationToken);
@@ -156,6 +166,20 @@ public class FriendlyPingServer {
     logger.log(Level.INFO, "Device Unique Id= " + newClient.deviceUniqueId);
 
     if (newClient.isValid()) {
+
+      DatastoreV1.Entity.Builder employee = DatastoreV1.Entity.newBuilder()
+              .setKey(DatastoreHelper.makeKey("Person"))
+              .addProperty(DatastoreHelper.makeProperty("name", DatastoreHelper.makeValue(newClient.name)))
+              .addProperty(DatastoreHelper.makeProperty("regToken", DatastoreHelper.makeValue(newClient.registrationToken)))
+              .addProperty(DatastoreHelper.makeProperty("deviceID", DatastoreHelper.makeValue(newClient.deviceUniqueId)))
+              .addProperty(DatastoreHelper.makeProperty("profilePic", DatastoreHelper.makeValue(newClient.profilePictureUrl)));
+      DatastoreV1.CommitRequest commitRequest = DatastoreV1.CommitRequest.newBuilder()
+              .setMode(DatastoreV1.CommitRequest.Mode.NON_TRANSACTIONAL)
+              .setMutation(DatastoreV1.Mutation.newBuilder().addInsertAutoId(employee))
+              .build();
+      DatastoreV1.CommitResponse response = datastore.commit(commitRequest);
+
+
       broadcastNewClient(newClient);
       addClient(newClient);
       sendClientList(newClient);
@@ -188,8 +212,7 @@ public class FriendlyPingServer {
 
     if (!check) {
       clientMap.put(client.registrationToken, client);
-    }
-    else {
+    } else {
       clientToReplace.registrationToken = client.registrationToken;
       clientMap.remove(regId);
       clientMap.put(clientToReplace.registrationToken, clientToReplace);
@@ -239,7 +262,8 @@ public class FriendlyPingServer {
       }
     }
     JsonElement clientElements = gson.toJsonTree(clientList,
-        new TypeToken<Collection<Client>>() {}.getType());
+            new TypeToken<Collection<Client>>() {
+            }.getType());
     if (clientElements.isJsonArray()) {
       JsonObject jSendClientList = new JsonObject();
 
@@ -256,7 +280,7 @@ public class FriendlyPingServer {
    * Send message to Client with matching toToken. The validity of to and sender tokens
    * should be check before this method is called.
    *
-   * @param toToken Token of recipient of ping.
+   * @param toToken     Token of recipient of ping.
    * @param senderToken Token of sender of ping.
    */
   private void pingClient(String toToken, String senderToken) {
@@ -289,6 +313,26 @@ public class FriendlyPingServer {
     friendlyGcmServer.send(toToken, jPing);
   }
 
+  public static Datastore getDatastore(String datasetId) {
+    //Datastore v2 =
+    try {
+      // Setup the connection to Google Cloud Datastore and infer credentials
+      // from the environment.
+      datastore = DatastoreFactory.get().create(DatastoreHelper.getOptionsFromEnv()
+              .dataset(datasetId).build());
+      logger.info("successfully connected to the dtastore");
+      return datastore;
+    } catch (GeneralSecurityException exception) {
+      System.err.println("Security error connecting to the datastore: " + exception.getMessage());
+      System.exit(1);
+      return null;
+    } catch (IOException exception) {
+      System.err.println("I/O error connecting to the datastore: " + exception.getMessage());
+      System.exit(1);
+      return null;
+    }
+  }
+
   public static void main(String[] args) {
     if (args.length < 1) {
       System.err.println("Usage: FriendlyPingServer <DATASET_ID>");
@@ -297,23 +341,22 @@ public class FriendlyPingServer {
     // Set the dataset from the command line parameters.
     String datasetId = args[0];
     Datastore datastore = null;
+    datastore = getDatastore(datasetId);
     //Datastore v2 =
-    try {
+/*    try {
       // Setup the connection to Google Cloud Datastore and infer credentials
       // from the environment.
       datastore = DatastoreFactory.get().create(DatastoreHelper.getOptionsFromEnv()
-              .dataset(datasetId).build());
-      logger.info("successfully connected to the dtastore");
+              logger.info("successfully connected to the dtastore");
     } catch (GeneralSecurityException exception) {
       System.err.println("Security error connecting to the datastore: " + exception.getMessage());
       System.exit(1);
     } catch (IOException exception) {
       System.err.println("I/O error connecting to the datastore: " + exception.getMessage());
       System.exit(1);
-    }
+    }*/
     // Initialize FriendlyPingServer with appropriate API Key and SenderID.
     new FriendlyPingServer(API_KEY, SENDER_ID);
-
     // Keep main thread alive.
     try {
       CountDownLatch latch = new CountDownLatch(1);
